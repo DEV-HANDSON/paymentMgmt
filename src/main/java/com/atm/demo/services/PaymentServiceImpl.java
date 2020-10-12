@@ -1,41 +1,45 @@
-package com.atm.demo.services;
+    package com.atm.demo.services;
 
-import com.atm.demo.entity.Payment;
-import com.atm.demo.repository.PaymentRepository;
-import com.atm.demo.request.CreatePaymentRequest;
-import com.atm.demo.response.PaymentResponse;
-import com.atm.demo.util.DozzerMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+    import com.atm.demo.entity.Payment;
+    import com.atm.demo.repository.PaymentRepository;
+    import com.atm.demo.request.CreatePaymentRequest;
+    import com.atm.demo.response.PaymentResponse;
+    import com.atm.demo.util.DozzerMapper;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.beans.factory.annotation.Value;
+    import org.springframework.stereotype.Service;
 
-import java.util.List;
+    import java.util.List;
 
-@Service
-public class PaymentServiceImpl implements PaymentService {
+    @Service
+    public class PaymentServiceImpl implements PaymentService {
 
-    @Autowired
-     private  PaymentRepository paymentRepository;
+        @Value("${paymentMessage}")
+        private String paymentMsg;
 
-    @Override
-    public PaymentResponse createpayment(CreatePaymentRequest createPaymentRequest) {
+        @Autowired
+         private  PaymentRepository paymentRepository;
 
-        PaymentResponse res = new PaymentResponse();
+        @Override
+        public PaymentResponse createpayment(CreatePaymentRequest createPaymentRequest) {
 
-        Payment pay = DozzerMapper.map(createPaymentRequest, Payment.class);
-        pay = paymentRepository.save(pay);
-        if (pay.getId() != null) {
-            res.setResponseMessage("Successful !!!!!!");
-            res.setPayment(pay);
-        } else {
-            res.setResponseMessage("Unsuccessful !!!!");
+            PaymentResponse res = new PaymentResponse();
+
+            Payment pay = DozzerMapper.map(createPaymentRequest, Payment.class);
+            pay = paymentRepository.save(pay);
+            if (pay.getId() != null) {
+                res.setResponseMessage(paymentMsg);
+                res.setPayment(pay);
+            } else {
+                res.setResponseMessage("Unsuccessful !!!!");
+            }
+            return res;
         }
-        return res;
-    }
 
-    @Override
-    public List<Payment> getAllpayment() {
-        List<Payment> pay = paymentRepository.findAll();
-        return pay;
-    }
+        @Override
+        public List<Payment> getAllpayment() {
+            List<Payment> pay = paymentRepository.findAll();
+            return pay;
+        }
 
-}
+    }
