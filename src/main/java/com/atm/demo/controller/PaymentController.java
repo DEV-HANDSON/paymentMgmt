@@ -3,8 +3,10 @@ package com.atm.demo.controller;
 import com.atm.demo.entity.Payment;
 import com.atm.demo.request.CreatePaymentRequest;
 import com.atm.demo.response.PaymentResponse;
+import com.atm.demo.services.PaymentService;
 import com.atm.demo.services.PaymentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,11 +30,9 @@ public class PaymentController {
 
     }
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(value = "/getPayments", method = RequestMethod.GET)
     public List<Payment> getAllPayment() {
-
-        return paymentService.getAllpayment();
+        List<Payment> list= paymentService.getAllpayment();
+        return list;
     }
-
-
 }

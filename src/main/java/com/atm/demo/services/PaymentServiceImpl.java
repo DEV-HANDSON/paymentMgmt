@@ -14,8 +14,9 @@ import java.util.List;
 public class PaymentServiceImpl implements PaymentService {
 
     @Autowired
-    PaymentRepository paymentRepository;
+     private  PaymentRepository paymentRepository;
 
+    @Override
     public PaymentResponse createpayment(CreatePaymentRequest createPaymentRequest) {
 
         PaymentResponse res = new PaymentResponse();
@@ -33,7 +34,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public List<Payment> getAllpayment() {
-        return paymentRepository.findAll();
+        List<Payment> pay = paymentRepository.findAll();
+        return pay;
     }
 
 }
